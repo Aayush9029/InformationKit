@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "InformationKit",
     platforms: [
-        .iOS(.v14),
+        .iOS(.v15),
         .macOS(.v12),
     ],
     products: [
@@ -21,7 +21,9 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "InformationKit",
-            dependencies: []),
+            resources: [
+                .copy("Media"),
+            ]),
         .testTarget(
             name: "InformationKitTests",
             dependencies: ["InformationKit"]),
