@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  InformationModel.swift
 //
 //
 //  Created by Aayush Pokharel on 2023-05-01.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct InformationModel {
+public struct InformationModel: Codable {
     let title: String
     let subtitle: String
     let description: String
@@ -25,8 +25,12 @@ public struct InformationModel {
         type: .update,
         build: 2.0
     )
+
+    public static func fetchInformations(from url: URL) async throws -> [InformationModel] {
+        try await APIService.fetchInformations(from: url)
+    }
 }
 
-public enum InformationType: String {
+public enum InformationType: String, Codable {
     case news, update
 }

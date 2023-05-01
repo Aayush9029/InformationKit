@@ -1,5 +1,5 @@
 //
-//  SwiftUIView.swift
+//  InformationBanner.swift
 //
 //
 //  Created by Aayush Pokharel on 2023-05-01.
@@ -49,7 +49,11 @@ public struct InformationBanner: View {
                         .foregroundColor(.blue)
                         .padding(.horizontal, 6)
                     }
+                    #if os(iOS)
                     .buttonBorderShape(.capsule)
+                    #else
+                    .buttonBorderShape(.automatic)
+                    #endif
                     .buttonStyle(.bordered)
                     .padding(.horizontal)
                     Text("Build \(information.build, specifier: "%.1f")")
@@ -60,6 +64,7 @@ public struct InformationBanner: View {
         }
         .frame(height: 74)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+        .shadow(color: .primary.opacity(0.10), radius: 8, y: 6)
     }
 }
 
@@ -70,6 +75,7 @@ struct InformationBanner_Previews: PreviewProvider {
                 Spacer()
                 InformationBanner(information: .example)
             }
+            .background(.blue)
 
             VStack {
                 Spacer()
