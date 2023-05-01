@@ -7,7 +7,11 @@ InformationKit is a Swift library used to display small banners with app update 
 
   <a href="https://www.buymeacoffee.com/swiftdev" target="_blank"><img src="https://user-images.githubusercontent.com/43297314/167192051-dc8cfd47-1c2d-43f1-bb95-275ae70ef8dd.svg" alt="Buy Me coffee" ></a>
 
-<img src="https://user-images.githubusercontent.com/43297314/224458959-891955fe-242e-4717-ad9e-a79ccddb0f86.png" width="320"> &nbsp;
-<img src="https://user-images.githubusercontent.com/43297314/224458962-b9a621db-4c0a-4c6f-97f5-71fe8f76ea84.png" width="320">
+
+
+
+
+<img src="https://user-images.githubusercontent.com/43297314/235515840-b9176372-1f0e-48fd-9597-99adfcfe7c64.png" alt="app window" width="320"> &nbsp;
+<img src="https://user-images.githubusercontent.com/43297314/235515846-54c77e0e-b649-4d22-a714-78c4e3b42388.png" width="320">
 </div>
 
