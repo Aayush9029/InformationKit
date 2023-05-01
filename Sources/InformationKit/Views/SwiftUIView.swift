@@ -8,7 +8,9 @@
 import SwiftUI
 
 public struct InformationBanner: View {
+    @Environment(\.openURL) var openURL
     let information: InformationModel
+
     public var body: some View {
         HStack(alignment: .center) {
             AsyncImage(url: information.image) { phase in
@@ -22,26 +24,30 @@ public struct InformationBanner: View {
             }
             .scaledToFit()
             .frame(maxWidth: 72)
+
             HStack {
                 VStack(alignment: .leading) {
                     Text(information.title)
                         .bold()
                         .foregroundStyle(.primary)
+                        .lineLimit(1)
 
                     Text(information.subtitle)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
-                        .lineLimit(3)
+                        .lineLimit(1)
                 }
                 Spacer()
                 VStack {
                     Button {
-                        print(information.url)
+                        openURL(information.url)
                     } label: {
-                        Text("View")
-                            .bold()
-                            .foregroundColor(.blue)
-                            .padding(.horizontal, 6)
+                        Text(
+                            information.type == .update ? "GET" : "VIEW"
+                        )
+                        .bold()
+                        .foregroundColor(.blue)
+                        .padding(.horizontal, 6)
                     }
                     .buttonBorderShape(.capsule)
                     .buttonStyle(.bordered)
@@ -52,17 +58,24 @@ public struct InformationBanner: View {
                 }
             }
         }
-        .frame(height: 80)
-
+        .frame(height: 74)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
     }
 }
 
 struct InformationBanner_Previews: PreviewProvider {
     static var previews: some View {
-        VStack {
-            Spacer()
-            InformationBanner(information: .example)
-        }.padding()
+        Group {
+            VStack {
+                Spacer()
+                InformationBanner(information: .example)
+            }
+
+            VStack {
+                Spacer()
+                InformationBanner(information: .example)
+                    .preferredColorScheme(.dark)
+            }
+        }
     }
 }
