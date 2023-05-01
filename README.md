@@ -17,7 +17,7 @@ InformationKit is a Swift library used to display small banners with app update 
 
 
 ### Usage
-InformationKit is extremely easy to integrate. You don't need to pass any variables, or set any parameters from your view. Just modify your **info.plist** and add `InformationSourceURL` and `InformationSortType` keys and done.
+InformationKit is extremely easy to integrate. You don't need to pass any variables, or set any parameters from your view. Just add `InformationSourceURL` and `InformationSortType` keys to your **info.plist**.
 ```xml
 <!--index, random or prioritized-->
 <key>InformationSortType</key>
