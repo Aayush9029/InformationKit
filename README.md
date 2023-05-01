@@ -10,9 +10,31 @@ InformationKit is a Swift library used to display small banners with app update 
 
 
 
-
-
 <img src="https://user-images.githubusercontent.com/43297314/235515840-b9176372-1f0e-48fd-9597-99adfcfe7c64.png" alt="app window" width="320"> &nbsp;
-<img src="https://user-images.githubusercontent.com/43297314/235515846-54c77e0e-b649-4d22-a714-78c4e3b42388.png" width="320">
+<img src="https://user-images.githubusercontent.com/43297314/235528456-228ea1ce-e788-4dfc-b925-cca420200aff.png" width="320">
 </div>
 
+
+
+### Usage
+InformationKit is extremely easy to integrate. You don't need to pass any variables, or set any parameters from your view. Just modify your **info.plist** and add `InformationSourceURL` and `InformationSortType` keys and done.
+```xml
+<!--index, random or prioritized-->
+<key>InformationSortType</key>
+<string>prioritized</string>
+
+<!--remote config URL-->
+<key>InformationSourceURL</key>
+<string>https://aayush9029.github.io/Armed/news/config.json</string>
+```
+
+```swift
+import InformationKit
+import SwiftUI
+
+struct ContentView: View {
+    var body: some View {
+        InformationBanner()
+    }
+}
+```
