@@ -7,13 +7,37 @@
 
 import SwiftUI
 
+public struct InformationBannerStyle {
+    var showDescription: Bool
+    var backgroundMaterial: Material
+    var showBorder: Bool
+    var showShadow: Bool
+
+    public init(
+        showDescription: Bool = true,
+        backgroundMaterial: Material = .ultraThinMaterial,
+        showBorder: Bool = false,
+        showShadow: Bool = true
+    ) {
+        self.showDescription = showDescription
+        self.backgroundMaterial = backgroundMaterial
+        self.showBorder = showBorder
+        self.showShadow = showShadow
+    }
+}
+
 public struct InformationBanner: View {
     @Environment(\.openURL) var openURL
-    let information: InformationModel
+    @StateObject var infoKit: InformationKit = .init()
+    var style: InformationBannerStyle
+
+    public init(style: InformationBannerStyle = InformationBannerStyle()) {
+        self.style = style
+    }
 
     public var body: some View {
         HStack(alignment: .center) {
-            AsyncImage(url: information.image) { phase in
+            AsyncImage(url: infoKit.mainInformation.image) { phase in
                 switch phase {
                 case .success(let image):
                     image.resizable()
@@ -27,44 +51,59 @@ public struct InformationBanner: View {
 
             HStack {
                 VStack(alignment: .leading) {
-                    Text(information.title)
+                    Text(infoKit.mainInformation.title)
                         .bold()
                         .foregroundStyle(.primary)
                         .lineLimit(1)
 
-                    Text(information.subtitle)
+                    Text(infoKit.mainInformation.subtitle)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
+
+                    if style.showDescription {
+                        Text(infoKit.mainInformation.description)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                    }
                 }
                 Spacer()
                 VStack {
                     Button {
-                        openURL(information.url)
+                        openURL(infoKit.mainInformation.url)
                     } label: {
                         Text(
-                            information.type == .update ? "GET" : "VIEW"
+                            infoKit.mainInformation.type == .update ? "GET" : "VIEW"
                         )
                         .bold()
                         .foregroundColor(.blue)
                         .padding(.horizontal, 6)
                     }
-                    #if os(iOS)
+#if os(iOS)
                     .buttonBorderShape(.capsule)
-                    #else
+#else
                     .buttonBorderShape(.automatic)
-                    #endif
+#endif
                     .buttonStyle(.bordered)
                     .padding(.horizontal)
-                    Text("Build \(information.build, specifier: "%.1f")")
+                    Text("Build \(infoKit.mainInformation.build)")
                         .font(.caption2)
                         .foregroundStyle(.secondary)
                 }
             }
         }
         .frame(height: 74)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
-        .shadow(color: .primary.opacity(0.10), radius: 8, y: 6)
+        .background(style.backgroundMaterial, in: RoundedRectangle(cornerRadius: 16))
+        .overlay(
+            Group {
+                if style.showBorder {
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(Color.primary.opacity(0.125), lineWidth: 1)
+                }
+            }
+        )
+        .shadow(color: style.showShadow ? .primary.opacity(0.10) : .clear, radius: 8, y: 6)
     }
 }
 
@@ -73,15 +112,16 @@ struct InformationBanner_Previews: PreviewProvider {
         Group {
             VStack {
                 Spacer()
-                InformationBanner(information: .example)
+                InformationBanner()
+                    .padding(6)
             }
             .background(.blue)
 
             VStack {
                 Spacer()
-                InformationBanner(information: .example)
+                InformationBanner().padding(6)
                     .preferredColorScheme(.dark)
-            }
+            }.background(.black)
         }
     }
 }

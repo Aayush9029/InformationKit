@@ -14,7 +14,7 @@ public struct InformationModel: Codable {
     let image: URL
     let url: URL
     let type: InformationType
-    let build: Double
+    let build: String
 
     public static let example = InformationModel(
         title: "Armed macOS",
@@ -23,7 +23,7 @@ public struct InformationModel: Codable {
         image: URL(string: "https://raw.githubusercontent.com/Aayush9029/Armed/gh-pages/news/assets/ArmedAppIcon.png")!,
         url: URL(string: "https://armed.aayush.art/download")!,
         type: .update,
-        build: 2.0
+        build: "2.0"
     )
 
     public static func fetchInformations(from url: URL) async throws -> [InformationModel] {
