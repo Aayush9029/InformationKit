@@ -16,7 +16,7 @@ public class InformationKit: ObservableObject {
 
     /// The mainInformation represents the most relevant piece of information based on the InformationViewType and other factors.
     /// Update information is prioritized over news if the build number is greater than the installed app's build number.
-    @Published public var mainInformation: InformationModel = .example
+    @Published public var mainInformation: InformationModel?
 
     /// The sortType determines how the main information should be chosen from the available information.
     public var sortType: InformationSortType = .prioritized
@@ -28,22 +28,25 @@ public class InformationKit: ObservableObject {
     init() {
         loadSourceURL()
         loadViewType()
-        fetchInformations()
+        Task {
+            await fetchInformations()
+        }
     }
 
     /// Fetches the information from the sourceURL and updates the allInformations array.
-    func fetchInformations() {
+    @MainActor
+    func fetchInformations() async {
         guard let sourceURL = sourceURL else {
             logger.error("Source URL not found in info.plist")
             return
         }
-        Task {
-            do {
-                allInformations = try await InformationModel.fetchInformations(from: sourceURL)
-                prioritizeInformation()
-            } catch {
-                logger.error("Error:\(error) fetching Informations from \(sourceURL)")
-            }
+
+        do {
+            allInformations = try await InformationModel.fetchInformations(from: sourceURL)
+
+            prioritizeInformation()
+        } catch {
+            logger.error("Error:\(error) fetching Informations from \(sourceURL)")
         }
     }
 
@@ -52,15 +55,15 @@ public class InformationKit: ObservableObject {
         logger.log("Prioritizing Informations")
         if allInformations.count < 1 {
             logger.log("Only one information found returning it.")
-            mainInformation = allInformations.first ?? .example
+            mainInformation = allInformations.first
         }
         switch sortType {
         case .index:
             logger.log("Returning first information")
-            mainInformation = allInformations.first ?? .example
+            mainInformation = allInformations.first
         case .random:
             logger.log("Returning random information")
-            mainInformation = allInformations.randomElement() ?? .example
+            mainInformation = allInformations.randomElement()
         case .prioritized:
             logger.log("Returning prioritized information")
             for information in allInformations {
@@ -69,7 +72,6 @@ public class InformationKit: ObservableObject {
                     return
                 }
             }
-            mainInformation = allInformations.first ?? .example
         }
     }
 

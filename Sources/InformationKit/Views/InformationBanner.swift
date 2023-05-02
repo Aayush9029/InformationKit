@@ -36,74 +36,76 @@ public struct InformationBanner: View {
     }
 
     public var body: some View {
-        HStack(alignment: .center) {
-            AsyncImage(url: infoKit.mainInformation.image) { phase in
-                switch phase {
-                case .success(let image):
-                    image.resizable()
-                default:
-                    Image("placeholderIcon", bundle: .module)
-                        .resizable()
+        if let mainInformation = infoKit.mainInformation {
+            HStack(alignment: .center) {
+                AsyncImage(url: mainInformation.image) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image.resizable()
+                    default:
+                        Image("placeholderIcon", bundle: .module)
+                            .resizable()
+                    }
                 }
-            }
-            .scaledToFit()
-            .frame(maxWidth: 72)
+                .scaledToFit()
+                .frame(maxWidth: 72)
 
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(infoKit.mainInformation.title)
-                        .bold()
-                        .foregroundStyle(.primary)
-                        .lineLimit(1)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(mainInformation.title)
+                            .bold()
+                            .foregroundStyle(.primary)
+                            .lineLimit(1)
 
-                    Text(infoKit.mainInformation.subtitle)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                        .lineLimit(1)
-
-                    if style.showDescription {
-                        Text(infoKit.mainInformation.description)
+                        Text(mainInformation.subtitle)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                             .lineLimit(1)
+
+                        if style.showDescription {
+                            Text(mainInformation.description)
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                                .lineLimit(1)
+                        }
                     }
-                }
-                Spacer()
-                VStack {
-                    Button {
-                        openURL(infoKit.mainInformation.url)
-                    } label: {
-                        Text(
-                            infoKit.mainInformation.type == .update ? "GET" : "VIEW"
-                        )
-                        .bold()
-                        .foregroundColor(.blue)
-                        .padding(.horizontal, 6)
-                    }
+                    Spacer()
+                    VStack {
+                        Button {
+                            openURL(mainInformation.url)
+                        } label: {
+                            Text(
+                                mainInformation.type == .update ? "GET" : "VIEW"
+                            )
+                            .bold()
+                            .foregroundColor(.blue)
+                            .padding(.horizontal, 6)
+                        }
 #if os(iOS)
-                    .buttonBorderShape(.capsule)
+                        .buttonBorderShape(.capsule)
 #else
-                    .buttonBorderShape(.automatic)
+                        .buttonBorderShape(.automatic)
 #endif
-                    .buttonStyle(.bordered)
-                    .padding(.horizontal)
-                    Text("Build \(infoKit.mainInformation.build)")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
+                        .buttonStyle(.bordered)
+                        .padding(.horizontal)
+                        Text("Build \(mainInformation.build)")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
+            .frame(height: 74)
+            .background(style.backgroundMaterial, in: RoundedRectangle(cornerRadius: 16))
+            .overlay(
+                Group {
+                    if style.showBorder {
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color.primary.opacity(0.125), lineWidth: 1)
+                    }
+                }
+            )
+            .shadow(color: style.showShadow ? .primary.opacity(0.10) : .clear, radius: 8, y: 6)
         }
-        .frame(height: 74)
-        .background(style.backgroundMaterial, in: RoundedRectangle(cornerRadius: 16))
-        .overlay(
-            Group {
-                if style.showBorder {
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.primary.opacity(0.125), lineWidth: 1)
-                }
-            }
-        )
-        .shadow(color: style.showShadow ? .primary.opacity(0.10) : .clear, radius: 8, y: 6)
     }
 }
 
