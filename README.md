@@ -4,7 +4,7 @@
 
   <img src="https://user-images.githubusercontent.com/43297314/235433087-aba0e80a-aced-4cc5-ae3d-5a7745f3a671.png" height="256" alt="information kit logo">
   <h1 align="center">InformationKit</h1>
-InformationKit is a Swift library used to display small banners with app update information within your own application. It enables users to stay up-to-date with the latest version of the app.
+InformationKit is a Swift library that enables users to stay up to date with their app updates and new releases. It prioritizes the information and displays it in an informative banner with just two lines of SwiftUI code.
 
   <a href="https://www.buymeacoffee.com/swiftdev" target="_blank"><img src="https://user-images.githubusercontent.com/43297314/167192051-dc8cfd47-1c2d-43f1-bb95-275ae70ef8dd.svg" alt="Buy Me coffee" ></a>
 
