@@ -22,7 +22,7 @@ let package = Package(
         .target(
             name: "InformationKit",
             resources: [
-                .copy("Media"),
+                .process("Resources"),
             ]),
         .testTarget(
             name: "InformationKitTests",

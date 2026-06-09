@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct InformationModel: Codable {
+public struct InformationModel: Codable, Equatable, Sendable {
     let title: String
     let subtitle: String
     let description: String
@@ -31,6 +31,6 @@ public struct InformationModel: Codable {
     }
 }
 
-public enum InformationType: String, Codable {
+public enum InformationType: String, Codable, Equatable, Sendable {
     case news, update
 }

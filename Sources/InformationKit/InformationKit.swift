@@ -122,7 +122,7 @@ public class InformationKit: ObservableObject {
     }
 
     /// InformationSortType is an enumeration used to specify the strategy for prioritizing and displaying information.
-    public enum InformationSortType: String {
+    public enum InformationSortType: String, Sendable {
         case index, random, prioritized
     }
 }

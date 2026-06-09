@@ -1,10 +1,11 @@
 @testable import InformationKit
-import XCTest
+import Testing
 
-final class InformationKitTests: XCTestCase {
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
+@Suite("InformationKit Tests")
+struct InformationKitTests {
+    @Test("Example information is an update")
+    func exampleInformationIsUpdate() {
+        #expect(InformationModel.example.type == .update)
+        #expect(InformationModel.example.build == "2.0")
     }
 }
