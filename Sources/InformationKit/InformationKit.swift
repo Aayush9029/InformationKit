@@ -25,7 +25,9 @@ public class InformationKit: ObservableObject {
     var sourceURL: URL?
 
     /// Initializes an instance of InformationKit.
-    init() {
+    init(fetchOnInit: Bool = true) {
+        guard fetchOnInit else { return }
+
         loadSourceURL()
         loadViewType()
         Task {

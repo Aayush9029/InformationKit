@@ -27,16 +27,25 @@ public struct InformationBannerStyle {
 }
 
 public struct InformationBanner: View {
-    @Environment(\.openURL) var openURL
-    @StateObject var infoKit: InformationKit = .init()
-    var style: InformationBannerStyle
+    @Environment(\.openURL) private var openURL
+    @StateObject private var infoKit: InformationKit
+    private let information: InformationModel?
+    private var style: InformationBannerStyle
 
     public init(style: InformationBannerStyle = InformationBannerStyle()) {
+        _infoKit = StateObject(wrappedValue: InformationKit())
+        information = nil
+        self.style = style
+    }
+
+    public init(information: InformationModel, style: InformationBannerStyle = InformationBannerStyle()) {
+        _infoKit = StateObject(wrappedValue: InformationKit(fetchOnInit: false))
+        self.information = information
         self.style = style
     }
 
     public var body: some View {
-        if let mainInformation = infoKit.mainInformation {
+        if let mainInformation = information ?? infoKit.mainInformation {
             HStack(alignment: .center) {
                 AsyncImage(url: mainInformation.image) { phase in
                     switch phase {

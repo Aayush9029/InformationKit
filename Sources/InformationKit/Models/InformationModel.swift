@@ -8,13 +8,31 @@
 import Foundation
 
 public struct InformationModel: Codable, Equatable, Sendable {
-    let title: String
-    let subtitle: String
-    let description: String
-    let image: URL
-    let url: URL
-    let type: InformationType
-    let build: String
+    public let title: String
+    public let subtitle: String
+    public let description: String
+    public let image: URL
+    public let url: URL
+    public let type: InformationType
+    public let build: String
+
+    public init(
+        title: String,
+        subtitle: String,
+        description: String,
+        image: URL,
+        url: URL,
+        type: InformationType,
+        build: String
+    ) {
+        self.title = title
+        self.subtitle = subtitle
+        self.description = description
+        self.image = image
+        self.url = url
+        self.type = type
+        self.build = build
+    }
 
     public static let example = InformationModel(
         title: "Armed macOS",

@@ -14,6 +14,9 @@ let package = Package(
         .library(
             name: "InformationKit",
             targets: ["InformationKit"]),
+        .executable(
+            name: "InformationKitDemo",
+            targets: ["InformationKitDemo"]),
     ],
     dependencies: [],
     targets: [
@@ -24,6 +27,9 @@ let package = Package(
             resources: [
                 .process("Resources"),
             ]),
+        .executableTarget(
+            name: "InformationKitDemo",
+            dependencies: ["InformationKit"]),
         .testTarget(
             name: "InformationKitTests",
             dependencies: ["InformationKit"]),
